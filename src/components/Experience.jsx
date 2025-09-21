@@ -1,58 +1,152 @@
-// src/components/Experience.jsx
+import React, { useEffect, useRef, useState } from "react";
+import { FaBuilding, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import experiences from "../data/experience";
+
 export default function Experience() {
-  const experiences = [
-    {
-      role: "DevOps Engineer",
-      company: "Tech Solutions Pvt. Ltd.",
-      period: "2022 - Present",
-      description:
-        "Building and maintaining scalable cloud infrastructure, implementing CI/CD pipelines, and improving observability with monitoring and logging solutions.",
-    },
-    {
-      role: "Cloud Engineer Intern",
-      company: "Cloudify Systems",
-      period: "2021 - 2022",
-      description:
-        "Worked on real-world cloud automation tasks using AWS and Terraform. Assisted in containerizing applications with Docker and orchestrating them with Kubernetes.",
-    },
-    {
-      role: "Full-Stack Developer Intern",
-      company: "WebStack Labs",
-      period: "2020 - 2021",
-      description:
-        "Built and deployed responsive web applications using React, Node.js, and MongoDB. Gained hands-on experience with REST APIs and Git-based collaboration.",
-    },
-  ];
+  const cardRefs = useRef([]);
+  const [lineHeight, setLineHeight] = useState(0);
+
+  // Animate vertical line height on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (cardRefs.current.length === 0) return;
+
+      const firstCard = cardRefs.current[0];
+      const lastCard = cardRefs.current[cardRefs.current.length - 1];
+      if (!firstCard || !lastCard) return;
+
+      const top = firstCard.getBoundingClientRect().top + window.scrollY;
+      const bottom = lastCard.getBoundingClientRect().bottom + window.scrollY;
+      const scrollY = window.scrollY + window.innerHeight / 2;
+
+      let height = scrollY - top;
+      if (height < 0) height = 0;
+      if (height > bottom - top) height = bottom - top;
+
+      setLineHeight(height);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <section id="experience" className="py-20 px-6 md:px-12 max-w-6xl mx-auto">
-      {/* Heading */}
+    <section
+      id="experience"
+      className="py-20 px-6 md:px-12 max-w-6xl mx-auto relative"
+    >
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-mono text-[#00ffea] mb-12 text-center">
         $ ./experience
       </h2>
 
-      {/* Timeline */}
-      <div className="relative border-l-2 border-accent/40 pl-6 space-y-12">
-        {experiences.map((exp, idx) => (
-          <div key={idx} className="relative">
-            {/* Dot */}
-            <span className="absolute -left-3 top-2 w-5 h-5 rounded-full bg-accent border-4 border-lightbg dark:border-darkbg2"></span>
+      <div className="relative flex flex-col gap-8 md:gap-12">
+        {/* Vertical timeline line */}
+        <motion.div
+          initial={{ height: 0 }}
+          animate={{ height: lineHeight }}
+          transition={{ type: "spring", stiffness: 100, damping: 25 }}
+          className="absolute top-0 left-6 md:left-1/2 -translate-x-0 md:-translate-x-1/2 w-[2px] rounded-full shadow-sm"
+          style={{
+            background: "linear-gradient(to bottom, #3b82f6 0%, #a21caf 100%)",
+            boxShadow: "0 0 6px #3b82f6aa, 0 0 10px #a21cafaa",
+          }}
+        />
 
-            {/* Content */}
-            <div className="bg-lightbg dark:bg-darkbg2 p-6 rounded-xl shadow-lg hover:shadow-accent/30 transition">
-              <h3 className="text-xl font-bold text-accent">
-                {exp.role} @ {exp.company}
-              </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                {exp.period}
-              </p>
-              <p className="text-gray-700 dark:text-gray-300">
-                {exp.description}
-              </p>
+        {experiences.map((exp, idx) => {
+          const isLeft = idx % 2 === 0;
+          const controls = useAnimation();
+          const [inViewRef, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
+
+          useEffect(() => {
+            if (inView) controls.start({ opacity: 1, y: 0 });
+          }, [controls, inView]);
+
+          const setRefs = (el) => {
+            inViewRef(el);
+            cardRefs.current[idx] = el;
+          };
+
+          // Padding/margin for desktop spacing
+          const leftDesktop = "md:justify-end md:mr-12"; // margin-right keeps distance from line
+          const rightDesktop = "md:justify-start md:ml-12"; // margin-left keeps distance from line
+          const mobilePadding = "pl-12 pr-4 md:pl-0 md:pr-0"; // mobile padding for content
+
+          return (
+            <div
+              key={idx}
+              className="relative flex flex-col md:flex-row w-full items-start md:items-center"
+            >
+              {/* Left half */}
+              <div
+                className={`w-full md:w-1/2 flex ${mobilePadding} ${
+                  isLeft ? leftDesktop : rightDesktop
+                }`}
+              >
+                {isLeft && <Card ref={setRefs} controls={controls} exp={exp} />}
+              </div>
+
+              {/* Right half */}
+              <div
+                className={`w-full md:w-1/2 flex ${mobilePadding} ${
+                  !isLeft ? rightDesktop : leftDesktop
+                }`}
+              >
+                {!isLeft && <Card ref={setRefs} controls={controls} exp={exp} />}
+              </div>
+
+              {/* Connector dot */}
+              <div
+                className="absolute left-3 md:left-1/2 top-1/2 -translate-y-1/2 md:-translate-x-1/2
+                            z-20 flex items-center justify-center w-8 h-8 bg-lightbg dark:bg-darkbg2 rounded-full shadow-md"
+              >
+                <FaMapMarkerAlt size={20} className="text-[#00ffea]" />
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
 }
+
+// Card component
+const Card = React.forwardRef(({ exp, controls }, ref) => (
+  <motion.div
+    ref={ref}
+    initial={{ opacity: 0, y: 50 }}
+    animate={controls}
+    transition={{ duration: 0.6, ease: "easeOut" }}
+    className="bg-lightbg dark:bg-darkbg2 p-6 md:p-8 rounded-xl shadow-lg hover:shadow-accent/30 transition transform hover:scale-[1.02] w-full md:max-w-lg flex flex-col gap-4"
+  >
+    <h3 className="text-xl font-bold text-accent">{exp.title}</h3>
+    <p className="flex items-center gap-2 text-base font-semibold text-gray-700 dark:text-gray-300">
+      <FaBuilding className="text-accent" /> {exp.company}
+    </p>
+    <div className="flex items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+      <span className="flex items-center gap-2">
+        <FaCalendarAlt className="text-accent" /> {exp.period}
+      </span>
+      <span className="flex items-center gap-2">
+        <FaMapMarkerAlt className="text-accent" /> {exp.location}
+      </span>
+    </div>
+    <ul className="list-disc ml-6 text-gray-700 dark:text-gray-300 space-y-2">
+      {exp.description.map((item, i) => (
+        <li key={i}>{item}</li>
+      ))}
+    </ul>
+    <div className="flex flex-wrap gap-3 mt-4">
+      {exp.tags.map((tag, i) => (
+        <span
+          key={i}
+          className="px-3 py-[5px] text-xs rounded-full bg-accent/10 text-accent hover:bg-accent/20 transition"
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+  </motion.div>
+));

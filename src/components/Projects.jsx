@@ -1,48 +1,11 @@
 // src/components/Projects.jsx
 import { useState } from "react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import projectsData from "../data/projects"; // now importing from data file
 
 export default function Projects() {
-  const allProjects = [
-    {
-      title: "CI/CD Pipeline Automation",
-      description:
-        "Automated build, test, and deployment pipelines using GitHub Actions and Docker. Reduced release time by 40%.",
-      tech: ["GitHub Actions", "Docker", "Kubernetes"],
-      github: "https://github.com/your-username/cicd-pipeline",
-      live: "https://your-demo-link.com",
-    },
-    {
-      title: "Cloud Cost Optimizer",
-      description:
-        "Developed a tool to analyze and reduce AWS costs by automating unused resource detection and scheduling.",
-      tech: ["AWS", "Terraform", "Node.js"],
-      github: "https://github.com/your-username/cloud-cost-optimizer",
-    },
-    {
-      title: "Portfolio Website",
-      description:
-        "Personal portfolio built with React, Tailwind, and animated background. Fully responsive and SEO optimized.",
-      tech: ["React", "Tailwind CSS"],
-      github: "https://github.com/your-username/portfolio",
-      live: "https://rahulverse.com",
-    },
-    {
-      title: "Monitoring Dashboard",
-      description:
-        "Built a real-time monitoring dashboard for servers and apps with Prometheus + Grafana.",
-      tech: ["Prometheus", "Grafana", "Node.js"],
-    },
-    {
-      title: "ChatOps Bot",
-      description:
-        "Created a Slack bot for automated deployments, monitoring alerts, and team notifications.",
-      tech: ["Slack API", "Node.js", "Docker"],
-    },
-  ];
-
   const [showAll, setShowAll] = useState(false);
-  const projectsToShow = showAll ? allProjects : allProjects.slice(0, 3);
+  const projectsToShow = showAll ? projectsData : projectsData.slice(0, 3);
 
   return (
     <section id="projects" className="py-20 px-6 md:px-12 max-w-6xl mx-auto">
@@ -58,9 +21,22 @@ export default function Projects() {
             key={idx}
             className="bg-lightbg dark:bg-darkbg2 p-6 rounded-xl shadow-lg hover:shadow-accent/30 transition flex flex-col"
           >
+            {/* Title */}
             <h3 className="text-xl font-bold text-accent mb-2">
               {project.title}
             </h3>
+
+            {/* Image */}
+            {project.image && (
+              <img
+                src={project.image}
+                alt={`${project.title} thumbnail`}
+                className="w-full h-40 object-cover rounded-lg mb-3"
+                loading="lazy"
+              />
+            )}
+
+            {/* Description */}
             <p className="text-gray-700 dark:text-gray-300 flex-1">
               {project.description}
             </p>
@@ -105,7 +81,7 @@ export default function Projects() {
       </div>
 
       {/* See All Button */}
-      {!showAll && allProjects.length > 3 && (
+      {!showAll && projectsData.length > 3 && (
         <div className="mt-10 flex justify-center">
           <button
             onClick={() => setShowAll(true)}
