@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply text-white;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom Tailwind class for Allura */
+.font-allura {
+  font-family: 'Allura', cursive;
+}
+
+.text-gradient-1 {
+  background: linear-gradient(45deg, #67b26f, #4ca2cd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s step-start infinite;
+}
+
+/* Prevent sticky header from hiding anchor targets */
+[id] {
+  scroll-margin-top: 6rem; /* adjust based on your header height */
+}
+
+html {
+  scroll-behavior: smooth;
+}
