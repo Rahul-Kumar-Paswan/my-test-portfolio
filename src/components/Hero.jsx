@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaFileAlt } from "react-icons/fa";
+import socialLinks from "../data/socialLinks";
 
 export default function Hero() {
   const messages = [
@@ -96,7 +97,7 @@ export default function Hero() {
         {/* Buttons and Social Icons */}
         <div className="flex flex-col items-center gap-4 mt-8">
           <a
-            href="/src/assets/RahulPaswan_Resume.pdf"
+            href={socialLinks.resume}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-white text-gray-900 font-semibold flex items-center justify-center gap-3 px-6 sm:px-10 py-2 rounded-xl shadow-lg text-base sm:text-lg border border-gray-300 transition-colors duration-300 hover:bg-black hover:text-white"
@@ -107,7 +108,7 @@ export default function Hero() {
 
           <div className="flex gap-3 sm:gap-4">
             <a
-              href="https://github.com/your-username"
+              href={socialLinks.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -116,7 +117,7 @@ export default function Hero() {
               <FaGithub className="text-xl sm:text-2xl" />
             </a>
             <a
-              href="https://linkedin.com/in/your-linkedin"
+              href={socialLinks.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -125,7 +126,7 @@ export default function Hero() {
               <FaLinkedin className="text-xl sm:text-2xl" />
             </a>
             <a
-              href="mailto:yourmail@example.com"
+              href={socialLinks.email}
               aria-label="Email"
               className="bg-black text-white flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-lg shadow border border-black transition-colors duration-300 hover:bg-white hover:text-black"
             >

@@ -1,4 +1,5 @@
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import socialLinks from "../data/socialLinks";
 
 export default function Footer() {
   return (
@@ -7,20 +8,20 @@ export default function Footer() {
         <p>© 2025 Rahul Paswan. All rights reserved.</p>
         <div className="flex justify-center gap-5 mt-3 text-white text-lg">
           <a
-            href="https://github.com/rahulpaswan"
+            href={socialLinks.github}
             target="_blank"
             rel="noopener noreferrer"
           >
             <FaGithub className="cursor-pointer hover:text-accent transition-colors duration-300" />
           </a>
           <a
-            href="https://linkedin.com/in/rahulpaswan"
+            href={socialLinks.linkedin}
             target="_blank"
             rel="noopener noreferrer"
           >
             <FaLinkedin className="cursor-pointer hover:text-accent transition-colors duration-300" />
           </a>
-          <a href="mailto:rahul@example.com">
+          <a href={socialLinks.email}>
             <FaEnvelope className="cursor-pointer hover:text-accent transition-colors duration-300" />
           </a>
         </div>
