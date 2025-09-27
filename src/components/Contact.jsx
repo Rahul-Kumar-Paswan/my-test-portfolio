@@ -69,7 +69,7 @@ export default function Connect() {
         $ ./Let’s Connect
       </h2>
 
-      <p className="text-lg text-gray-200 mb-10 text-center max-w-3xl">
+      <p className="text-lg text-gray-200 mb-10 text-center max-w-3xl italic">
         I’m always open to discussing DevOps, cloud architecture, and
         infrastructure automation. Drop me a message, and let’s create something
         scalable and reliable.
@@ -179,10 +179,10 @@ export default function Connect() {
             </span>
             <div className="flex flex-col">
               <span className="text-lg sm:text-xl font-bold text-white tracking-wide">
-                Available for opportunities
+                Exploring New Opportunities
               </span>
               <span className="text-sm text-gray-300 mt-2 italic">
-                I'm open for opportunities, feel free to reach out to me
+                “I’m excited to explore opportunities where I can contribute and grow. Feel free to reach out — I’d be happy to connect!”
               </span>
             </div>
           </div>
@@ -200,8 +200,8 @@ export default function Connect() {
               >
                 Download Resume
               </a>
-              <span className="text-sm sm:text-base text-gray-300">
-                View my experience
+              <span className="text-sm text-gray-300 mt-2 italic">
+                “A closer look at my skills and expertise.”
               </span>
             </div>
           </div>

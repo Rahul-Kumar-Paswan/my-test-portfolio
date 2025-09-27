@@ -4,9 +4,11 @@ import socialLinks from "../data/socialLinks";
 
 export default function Hero() {
   const messages = [
-    "🛠️ Building Scalable Infrastructure",
-    "☁️ Automating & Optimizing Cloud Systems",
-    "🚀 Delivering Scalable, Reliable Solutions",
+    "⚙️ DevOps Engineer",
+    "☁️ Cloud Enthusiast",
+    "🐳 Docker & Kubernetes",
+    "🚀 CI/CD Specialist",
+    "🛡️ Secure Infrastructure",
   ];
 
   const [text, setText] = useState("");
@@ -73,11 +75,11 @@ export default function Hero() {
           <span className="font-bold italic text-emerald-400 drop-shadow-md">
             DevOps Engineer
           </span>{" "}
-          specializing in building scalable, secure, and automated infrastructure.
+          focused on building scalable, secure, and automated infrastructure.
         </p>
 
         <p className="mt-4 text-base sm:text-lg text-gray-300">
-          I excel at closing the gap between development and operations to deliver faster, more reliable software.
+          I specialize in cloud platforms, automation, and continuous delivery.
         </p>
 
         {/* Animated Terminal Text */}

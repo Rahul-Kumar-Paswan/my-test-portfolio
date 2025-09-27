@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class", // important for toggling dark/light via .dark class on <html>
   content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -7,10 +8,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        accent: '#7c3aed', // example purple accent color
-        darkbg: '#0f172a',
-        darkbg2: '#1e293b',
-        lightbg: "#f8fafc",
+        accent: '#7c3aed', // purple accent color
+        darkbg: '#0f172a',   // dark mode background
+        darkbg2: '#1e293b',  // darker background for cards
+        lightbg: '#f8fafc',  // light mode background
       },
       transitionProperty: {
         'height': 'height',
@@ -49,4 +50,4 @@ export default {
     },
   },
   plugins: [],
-}
+};

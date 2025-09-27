@@ -17,31 +17,73 @@ import TestimonialsTab from "./tabs/TestimonialsTab";
 // Left Bio card
 function BioCard() {
   return (
-    <aside className="md:w-1/3 bg-white dark:bg-darkbg2 p-7 rounded-2xl flex flex-col items-center shadow-md mb-6 md:mb-0">
+    <aside className="md:w-1/3 bg-white dark:bg-darkbg2 p-6 rounded-2xl flex flex-col items-start shadow-md mb-6 md:mb-0">
+      {/* Profile Image */}
       <img
         src={profileImg}
         alt="Profile"
-        className="w-28 h-28 rounded-full border-4 border-accent mb-3 shadow"
+        className="w-28 h-28 rounded-full border-4 border-accent mb-3 shadow self-center"
         draggable={false}
       />
-      <h3 className="text-xl font-bold text-center mb-1 text-gray-900 dark:text-gray-100">
-        Rahul Paswan
-      </h3>
-      <div className="text-sm font-mono text-accent mb-2 text-center">
-        DevOps Engineer & Fullstack Developer
-      </div>
-      <p className="text-gray-800 dark:text-gray-300 text-sm text-center mb-4">
-        Passionate about scalable infrastructure, cloud automation, and crafting seamless web experiences.
-      </p>
-      <div className="flex flex-wrap gap-2 justify-center">
-        <span className="bg-accent text-white text-xs px-3 py-1 rounded-full">#DevOps</span>
-        <span className="bg-accent/80 text-white text-xs px-3 py-1 rounded-full">#ReactJS</span>
-        <span className="bg-indigo-600 text-white text-xs px-3 py-1 rounded-full">#Kubernetes</span>
-        <span className="bg-emerald-600 text-white text-xs px-3 py-1 rounded-full">#Cloud</span>
+      <br></br>
+
+      {/* Terminal-style Info */}
+      <div className="font-mono text-sm space-y-1">
+        <p>
+          <span className="text-green-400">$</span>{" "}
+          <span className="text-yellow-300">whoami</span>{" "}
+          <span className="text-blue-400">&gt;</span>{" "}
+          <span className="text-black dark:text-white">Rahul Paswan</span>
+        </p>
+
+        <p>
+          <span className="text-green-400">$</span>{" "}
+          <span className="text-yellow-300">uname -a</span>{" "}
+          <span className="text-blue-400">&gt;</span>{" "}
+          <span className="text-black dark:text-white">DevOps Engineer</span>
+        </p>
+
+        <p>
+          <span className="text-green-400">$</span>{" "}
+          <span className="text-yellow-300">uptime</span>{" "}
+          <span className="text-blue-400">&gt;</span>{" "}
+          <span className="text-black dark:text-white">2+ years of experience</span>
+        </p>
+
+        <p>
+          <span className="text-green-400">$</span>{" "}
+          <span className="text-yellow-300">ls skills/</span>{" "}
+          <span className="text-blue-400">&gt;</span>{" "}
+          <span className="text-black dark:text-white">Docker, Kubernetes, Terraform, Jenkins, Python</span>
+        </p>
+
+        <p>
+          <span className="text-green-400">$</span>{" "}
+          <span className="text-yellow-300">cat certifications.txt</span>{" "}
+          <span className="text-blue-400">&gt;</span>{" "}
+          <span className="text-black dark:text-white">
+            AWS, AZ-900, AZ-104, Google Cloud Certified
+          </span>
+        </p>
+
+        <p>
+          <span className="text-green-400">$</span>{" "}
+          <span className="text-yellow-300">ps aux | grep passion</span>{" "}
+          <span className="text-blue-400">&gt;</span>{" "}
+          <span className="text-black dark:text-white">Automation, Cloud, Scalability</span>
+        </p>
+
+        <p>
+          <span className="text-green-400">$</span>{" "}
+          <span className="text-yellow-300">echo</span>{" "}
+          <span className="text-blue-400">&gt;</span>{" "}
+          <span className="text-emerald-400">"Building scalable, secure, and automated infrastructure."</span>
+        </p>
       </div>
     </aside>
   );
 }
+
 
 // Tabs navigation
 function TabsNav({ tabs, activeTab, setActiveTab }) {
@@ -74,7 +116,7 @@ function TabsNav({ tabs, activeTab, setActiveTab }) {
           aria-controls={`${tab.id}-panel`}
           onClick={() => {
             setActiveTab(tab.id);
-            window.location.hash = tab.id; // keeps URL in sync with history
+            window.location.hash = `#${tab.id}`; // keeps URL in sync with history
           }}
           onKeyDown={(e) => handleKeyDown(e, idx)}
           className={`
@@ -82,7 +124,8 @@ function TabsNav({ tabs, activeTab, setActiveTab }) {
             flex items-center justify-center gap-2
             px-6 py-2
             rounded-full font-medium text-sm shadow-sm
-            transition-all duration-300
+            shadow-sm transition-all duration-300
+            focus:outline-none focus-visible:ring-2 focus-visible:ring-accent
             ${
               activeTab === tab.id
                 ? "bg-accent text-white shadow"
@@ -184,13 +227,29 @@ export default function About() {
     return () => window.removeEventListener("hashchange", openHashTab);
   }, [tabs]);
 
+// Scroll to the correct section after tab content is mounted
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash && hash === activeTab) {
+      setTimeout(() => {
+        const el = document.getElementById(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          el.focus?.({ preventScroll: true });
+        }
+      }, 100); // wait for DOM to update
+    }
+  }, [activeTab]);
+
+
+
   return (
     <section
       id="about"
       className="py-16 px-2 md:px-8 rounded-2xl shadow-lg max-w-6xl mx-auto mt-10"
     >
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-mono text-[#00ffea] mb-12 text-center tracking-wide break-words">
-        <Typewriter
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-mono text-[#00ffea] mb-12 text-center tracking-wide break-words">$ ./About Me
+        {/* <Typewriter
           words={["$ ./About Me"]}
           loop={false}
           cursor
@@ -198,7 +257,7 @@ export default function About() {
           typeSpeed={80}
           deleteSpeed={0}
           delaySpeed={1000}
-        />
+        /> */}
       </h2>
 
       <div className="flex flex-col md:flex-row gap-10">

@@ -42,7 +42,7 @@ export default function Experience() {
         $ ./experience
       </h2>
 
-      <div className="relative flex flex-col gap-8 md:gap-12">
+      <div className="relative flex flex-col gap-6 md:gap-12">
         {/* Vertical timeline line */}
         <motion.div
           initial={{ height: 0 }}
@@ -138,15 +138,31 @@ const Card = React.forwardRef(({ exp, controls }, ref) => (
         <li key={i}>{item}</li>
       ))}
     </ul>
-    <div className="flex flex-wrap gap-3 mt-4">
-      {exp.tags.map((tag, i) => (
-        <span
-          key={i}
-          className="px-3 py-[5px] text-xs rounded-full bg-accent/10 text-accent hover:bg-accent/20 transition"
-        >
-          {tag}
-        </span>
-      ))}
+
+    {/* Colored Tags */}
+    <div className="flex flex-wrap gap-2 justify-start mt-4">
+      {exp.tags.map((tag, i) => {
+        const tagColors = [
+          "bg-indigo-600",
+          "bg-emerald-600",
+          "bg-pink-600",
+          "bg-yellow-500",
+          "bg-blue-500",
+          "bg-purple-600",
+          "bg-rose-600",
+        ];
+
+        const bgColor = tagColors[i % tagColors.length];
+
+        return (
+          <span
+            key={i}
+            className={`${bgColor} text-white text-xs px-3 py-1 rounded-full hover:opacity-90 transition`}
+          >
+            #{tag}
+          </span>
+        );
+      })}
     </div>
   </motion.div>
 ));

@@ -12,7 +12,7 @@ export default function App() {
   return (
     <>
       <AnimatedStarsBG />
-      <div className="min-h-screen flex flex-col justify-between relative z-10">
+      <div className="min-h-screen flex flex-col justify-between relative z-10 bg-transparent text-black dark:text-white">
         <Header />
         <main className="flex-1">
           <Hero />

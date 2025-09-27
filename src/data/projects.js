@@ -8,7 +8,7 @@ const projects = [
   {
     title: "CI/CD Pipeline Automation",
     description:
-      "Automated build, test, and deployment pipelines using GitHub Actions and Docker. Reduced release time by 40%.",
+      "Built a basic CI/CD pipeline using GitHub Actions and Docker to automate builds, tests, and container deployments. This helped me understand real-world DevOps flows.",
     tech: ["GitHub Actions", "Docker", "Kubernetes"],
     github: "https://github.com/your-username/cicd-pipeline",
     live: "https://your-demo-link.com",

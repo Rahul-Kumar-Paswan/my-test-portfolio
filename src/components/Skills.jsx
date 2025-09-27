@@ -5,7 +5,7 @@ export default function Skills() {
     <section id="skills" className="min-h-[60vh] px-4 sm:px-8 py-20 flex flex-col items-center">
       {/* Heading */}
       <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-mono text-[#00ffea] mb-12 text-center tracking-wide break-words">
-        $ ./skills --list --verbose
+        $ ./skills
       </h2>
 
       {/* Responsive Grid */}
